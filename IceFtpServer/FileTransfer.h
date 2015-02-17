@@ -18,8 +18,8 @@
 // </auto-generated>
 //
 
-#ifndef __E__iflytek_IceFtp_IceFtpClient_FileTransfer_h__
-#define __E__iflytek_IceFtp_IceFtpClient_FileTransfer_h__
+#ifndef __E__iflytek_IceFtp_IceFtpServer_FileTransfer_h__
+#define __E__iflytek_IceFtp_IceFtpServer_FileTransfer_h__
 
 #include <IceUtil/PushDisableWarnings.h>
 #include <Ice/ProxyF.h>

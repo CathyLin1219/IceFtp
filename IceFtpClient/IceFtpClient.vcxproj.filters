@@ -24,6 +24,7 @@
   </ItemGroup>
   <ItemGroup>
     <None Include="FileTransfer.ice" />
+    <None Include="config.client" />
   </ItemGroup>
   <ItemGroup>
     <ClInclude Include="FileTransfer.h">
