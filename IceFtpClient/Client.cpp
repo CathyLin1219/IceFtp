@@ -27,8 +27,9 @@ FileTransferClient::run(int argc, char* argv[])
 	Ice::CommunicatorPtr ic;
 	try {
 		ic = Ice::initialize(argc, argv);
-		Ice::ObjectPrx base = ic->stringToProxy(ic->getProperties()->getProperty("FileStore.Proxy"));
-		FileTransferPrx transferPrx = FileTransferPrx::checkedCast(base);
+		Ice::ObjectPrx base = ic->stringToProxy("SimpleTransferID:tcp -h localhost -p 7788");
+		//Ice::ObjectPrx base = ic->propertyToProxy("FileStore.Proxy");
+			FileTransferPrx transferPrx = FileTransferPrx::checkedCast(base);
 		if (!transferPrx)
 			throw "Invalid proxy";
 
