@@ -18,7 +18,7 @@ private:
 	void showMenu();
 	int parsCommand(const char* strCommand);
 	void Upload(const char* strFilePath);
-	void Download(const char* strFilePath);
+	void Download(const char* strServerPath,const char* strClientPath);
 	void GetList();
 };
 
@@ -114,6 +114,9 @@ int FileTransferClient::parsCommand(const char* strCommand)
 	}
 	else if (strcmp(element[0], "download") == 0){
 		//处理 download [ServerFilePath] [LocalFilePath]
+		Download(element[1], element[2]);
+		//test  Download("output.txt", "e:\\a.txt");
+		
 		return 1;
 	}
 	else if (strcmp(element[0], "list") == 0){
@@ -145,7 +148,7 @@ void FileTransferClient::Upload(const char* strFilePath)
 	if (file == NULL)             /*判断文件是否打开成功*/
 		cout << "File open error"<<endl;
 
-	const int chunkSize = 1024;
+	const int chunkSize = 10 * 1024;
 	Ice::Int offset = 0;
 
 	list<Ice::AsyncResultPtr> results;
@@ -181,6 +184,8 @@ void FileTransferClient::Upload(const char* strFilePath)
 		}
 	}
 
+	fclose(file);
+
 	// Wait for any remaining requests to complete.
 	while (!results.empty()) {
 		Ice::AsyncResultPtr r = results.front();
@@ -188,4 +193,52 @@ void FileTransferClient::Upload(const char* strFilePath)
 		r->waitForCompleted();
 	}
 
+}
+
+void FileTransferClient::Download(const char* strServerPath, const char* strClientPath)
+{
+	FILE* file = fopen(strClientPath, "a+b");
+
+	if (file == NULL)             /*判断文件是否打开成功*/
+		cout << "File open error" << endl;
+
+	const int chunkSize = 10 * 1024;
+	Ice::Int offset = 0;
+
+	list<Ice::AsyncResultPtr> results;
+	const int numRequests = 5;
+
+	////解析文件名
+	//string strFileName = strFilePath;	// Remove directory if present.
+	//const size_t last_slash_idx = strFileName.find_last_of("\\/");
+	//if (std::string::npos != last_slash_idx)
+	//{
+	//	strFileName.erase(0, last_slash_idx + 1);
+	//}
+
+	while (1)
+	{
+		ByteSeq bs;
+		//read from server
+		Ice::AsyncResultPtr r = transferPrx->begin_read(strServerPath, offset, chunkSize);
+		offset += chunkSize;
+		r->waitForSent();
+		results.push_back(r);
+		if (results.size() > numRequests) {
+			Ice::AsyncResultPtr rout = results.front();
+			results.pop_front();
+			rout->waitForCompleted();
+			bs = transferPrx->end_read(rout);
+			fwrite(&bs[0], 1, bs.size(), file);
+			if (bs.size() < chunkSize){
+				break;
+			}
+		}
+	}
+	fclose(file);
+	// Wait for any remaining requests to complete.
+	while (!results.empty()) {
+		Ice::AsyncResultPtr r = results.front();
+		results.pop_front();
+	}
 }
