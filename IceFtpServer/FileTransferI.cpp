@@ -48,7 +48,7 @@ FileTransferI::read(const ::std::string& name, ::Ice::Int offset, ::Ice::Int num
 
 void FileTransferI::write(const ::std::string& name, ::Ice::Int offset, const ::Cathy::ByteSeq& bytes, const ::Ice::Current& )
 {
-	FILE* fp = fopen((_dataDir + "/" + name).c_str(), "wb");
+	FILE* fp = fopen((_dataDir + "/" + name).c_str(), "wb+");
 	if (fp == 0)
 	{
 		Ice::Exception ex;

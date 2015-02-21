@@ -35,7 +35,12 @@ FileTransferClient::run(int argc, char* argv[])
 
 		//FileHandle file = open(...);
 		string output = "output.txt";
-		FILE* file = fopen(output.c_str(), "wb");
+		FILE *wrfl = fopen(output.c_str(), "w+");
+		fwrite("asdfasd", 1, 7, wrfl);
+		fclose(wrfl);
+		FILE* file = fopen(output.c_str(), "rb");
+		if (file == NULL)             /*判断文件是否打开成功*/
+			cout<<"File open error";/*提示打开不成功*/
 		const int chunkSize = 1000 * 1024;
 		Ice::Int offset = 0;
 
@@ -44,12 +49,10 @@ FileTransferClient::run(int argc, char* argv[])
 
 		while (!feof(file))
 		{
-			ByteSeq bs;
-			//bs = file.read(chunkSize);
+			ByteSeq bs(chunkSize);
 			fread(&bs[0], 1, chunkSize, file);
 
 			// Send up to numRequests + 1 chunks asynchronously.
-			//Ice::AsyncResultPtr r = transferPrx->begin_send(offset, bs);
 			Ice::AsyncResultPtr r = transferPrx->begin_write(output, offset, bs);//让服务端写，即上传
 			offset += bs.size();
 

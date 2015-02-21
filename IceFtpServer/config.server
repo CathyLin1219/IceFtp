@@ -1,8 +1,8 @@
 #
 # The server creates one single object adapter with the name
-# "FileStore". The following line sets the endpoints for this adapter.
+# "FileTransfer". The following line sets the endpoints for this adapter.
 #
-FileTransfer.Endpoints=tcp -p 10000
+FileTransfer.Endpoints=tcp -h localhost -p 7788
 
 #
 # The data directory.
