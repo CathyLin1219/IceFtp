@@ -41,6 +41,10 @@ const ::std::string __Cathy__FileTransfer__read_name = "read";
 
 const ::std::string __Cathy__FileTransfer__write_name = "write";
 
+const ::std::string __Cathy__FileTransfer__remove_name = "remove";
+
+const ::std::string __Cathy__FileTransfer__list_name = "list";
+
 }
 ::IceProxy::Ice::Object* ::IceProxy::Cathy::upCast(::IceProxy::Cathy::FileTransfer* p) { return p; }
 
@@ -229,6 +233,244 @@ IceProxy::Cathy::FileTransfer::end_write(const ::Ice::AsyncResultPtr& __result)
     __end(__result, __Cathy__FileTransfer__write_name);
 }
 
+bool
+IceProxy::Cathy::FileTransfer::remove(const ::std::string& name, const ::Ice::Context* __ctx)
+{
+    __checkTwowayOnly(__Cathy__FileTransfer__remove_name);
+    ::IceInternal::Outgoing __og(this, __Cathy__FileTransfer__remove_name, ::Ice::Normal, __ctx);
+    try
+    {
+        ::IceInternal::BasicStream* __os = __og.startWriteParams(::Ice::DefaultFormat);
+        __os->write(name);
+        __og.endWriteParams();
+    }
+    catch(const ::Ice::LocalException& __ex)
+    {
+        __og.abort(__ex);
+    }
+    if(!__og.invoke())
+    {
+        try
+        {
+            __og.throwUserException();
+        }
+        catch(const ::Ice::UserException& __ex)
+        {
+            ::Ice::UnknownUserException __uue(__FILE__, __LINE__, __ex.ice_name());
+            throw __uue;
+        }
+    }
+    bool __ret;
+    ::IceInternal::BasicStream* __is = __og.startReadParams();
+    __is->read(__ret);
+    __og.endReadParams();
+    return __ret;
+}
+
+::Ice::AsyncResultPtr
+IceProxy::Cathy::FileTransfer::begin_remove(const ::std::string& name, const ::Ice::Context* __ctx, const ::IceInternal::CallbackBasePtr& __del, const ::Ice::LocalObjectPtr& __cookie)
+{
+    __checkAsyncTwowayOnly(__Cathy__FileTransfer__remove_name);
+    ::IceInternal::OutgoingAsyncPtr __result = new ::IceInternal::OutgoingAsync(this, __Cathy__FileTransfer__remove_name, __del, __cookie);
+    try
+    {
+        __result->prepare(__Cathy__FileTransfer__remove_name, ::Ice::Normal, __ctx);
+        ::IceInternal::BasicStream* __os = __result->startWriteParams(::Ice::DefaultFormat);
+        __os->write(name);
+        __result->endWriteParams();
+        __result->invoke();
+    }
+    catch(const ::Ice::Exception& __ex)
+    {
+        __result->abort(__ex);
+    }
+    return __result;
+}
+
+#ifdef ICE_CPP11
+
+::Ice::AsyncResultPtr
+IceProxy::Cathy::FileTransfer::__begin_remove(const ::std::string& name, const ::Ice::Context* __ctx, const ::IceInternal::Function<void (bool)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception, const ::IceInternal::Function<void (bool)>& __sent)
+{
+    class Cpp11CB : public ::IceInternal::Cpp11FnCallbackNC
+    {
+    public:
+
+        Cpp11CB(const ::std::function<void (bool)>& responseFunc, const ::std::function<void (const ::Ice::Exception&)>& exceptionFunc, const ::std::function<void (bool)>& sentFunc) :
+            ::IceInternal::Cpp11FnCallbackNC(exceptionFunc, sentFunc),
+            _response(responseFunc)
+        {
+            CallbackBase::checkCallback(true, responseFunc || exceptionFunc != nullptr);
+        }
+
+        virtual void completed(const ::Ice::AsyncResultPtr& __result) const
+        {
+            ::Cathy::FileTransferPrx __proxy = ::Cathy::FileTransferPrx::uncheckedCast(__result->getProxy());
+            bool __ret;
+            try
+            {
+                __ret = __proxy->end_remove(__result);
+            }
+            catch(const ::Ice::Exception& ex)
+            {
+                Cpp11FnCallbackNC::exception(__result, ex);
+                return;
+            }
+            if(_response != nullptr)
+            {
+                _response(__ret);
+            }
+        }
+    
+    private:
+        
+        ::std::function<void (bool)> _response;
+    };
+    return begin_remove(name, __ctx, new Cpp11CB(__response, __exception, __sent));
+}
+#endif
+
+bool
+IceProxy::Cathy::FileTransfer::end_remove(const ::Ice::AsyncResultPtr& __result)
+{
+    ::Ice::AsyncResult::__check(__result, this, __Cathy__FileTransfer__remove_name);
+    bool __ret;
+    if(!__result->__wait())
+    {
+        try
+        {
+            __result->__throwUserException();
+        }
+        catch(const ::Ice::UserException& __ex)
+        {
+            throw ::Ice::UnknownUserException(__FILE__, __LINE__, __ex.ice_name());
+        }
+    }
+    ::IceInternal::BasicStream* __is = __result->__startReadParams();
+    __is->read(__ret);
+    __result->__endReadParams();
+    return __ret;
+}
+
+::Cathy::ByteSeq
+IceProxy::Cathy::FileTransfer::list(const ::std::string& path, const ::Ice::Context* __ctx)
+{
+    __checkTwowayOnly(__Cathy__FileTransfer__list_name);
+    ::IceInternal::Outgoing __og(this, __Cathy__FileTransfer__list_name, ::Ice::Normal, __ctx);
+    try
+    {
+        ::IceInternal::BasicStream* __os = __og.startWriteParams(::Ice::DefaultFormat);
+        __os->write(path);
+        __og.endWriteParams();
+    }
+    catch(const ::Ice::LocalException& __ex)
+    {
+        __og.abort(__ex);
+    }
+    if(!__og.invoke())
+    {
+        try
+        {
+            __og.throwUserException();
+        }
+        catch(const ::Ice::UserException& __ex)
+        {
+            ::Ice::UnknownUserException __uue(__FILE__, __LINE__, __ex.ice_name());
+            throw __uue;
+        }
+    }
+    ::Cathy::ByteSeq __ret;
+    ::IceInternal::BasicStream* __is = __og.startReadParams();
+    __is->read(__ret);
+    __og.endReadParams();
+    return __ret;
+}
+
+::Ice::AsyncResultPtr
+IceProxy::Cathy::FileTransfer::begin_list(const ::std::string& path, const ::Ice::Context* __ctx, const ::IceInternal::CallbackBasePtr& __del, const ::Ice::LocalObjectPtr& __cookie)
+{
+    __checkAsyncTwowayOnly(__Cathy__FileTransfer__list_name);
+    ::IceInternal::OutgoingAsyncPtr __result = new ::IceInternal::OutgoingAsync(this, __Cathy__FileTransfer__list_name, __del, __cookie);
+    try
+    {
+        __result->prepare(__Cathy__FileTransfer__list_name, ::Ice::Normal, __ctx);
+        ::IceInternal::BasicStream* __os = __result->startWriteParams(::Ice::DefaultFormat);
+        __os->write(path);
+        __result->endWriteParams();
+        __result->invoke();
+    }
+    catch(const ::Ice::Exception& __ex)
+    {
+        __result->abort(__ex);
+    }
+    return __result;
+}
+
+#ifdef ICE_CPP11
+
+::Ice::AsyncResultPtr
+IceProxy::Cathy::FileTransfer::__begin_list(const ::std::string& path, const ::Ice::Context* __ctx, const ::IceInternal::Function<void (const ::Cathy::ByteSeq&)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception, const ::IceInternal::Function<void (bool)>& __sent)
+{
+    class Cpp11CB : public ::IceInternal::Cpp11FnCallbackNC
+    {
+    public:
+
+        Cpp11CB(const ::std::function<void (const ::Cathy::ByteSeq&)>& responseFunc, const ::std::function<void (const ::Ice::Exception&)>& exceptionFunc, const ::std::function<void (bool)>& sentFunc) :
+            ::IceInternal::Cpp11FnCallbackNC(exceptionFunc, sentFunc),
+            _response(responseFunc)
+        {
+            CallbackBase::checkCallback(true, responseFunc || exceptionFunc != nullptr);
+        }
+
+        virtual void completed(const ::Ice::AsyncResultPtr& __result) const
+        {
+            ::Cathy::FileTransferPrx __proxy = ::Cathy::FileTransferPrx::uncheckedCast(__result->getProxy());
+            ::Cathy::ByteSeq __ret;
+            try
+            {
+                __ret = __proxy->end_list(__result);
+            }
+            catch(const ::Ice::Exception& ex)
+            {
+                Cpp11FnCallbackNC::exception(__result, ex);
+                return;
+            }
+            if(_response != nullptr)
+            {
+                _response(__ret);
+            }
+        }
+    
+    private:
+        
+        ::std::function<void (const ::Cathy::ByteSeq&)> _response;
+    };
+    return begin_list(path, __ctx, new Cpp11CB(__response, __exception, __sent));
+}
+#endif
+
+::Cathy::ByteSeq
+IceProxy::Cathy::FileTransfer::end_list(const ::Ice::AsyncResultPtr& __result)
+{
+    ::Ice::AsyncResult::__check(__result, this, __Cathy__FileTransfer__list_name);
+    ::Cathy::ByteSeq __ret;
+    if(!__result->__wait())
+    {
+        try
+        {
+            __result->__throwUserException();
+        }
+        catch(const ::Ice::UserException& __ex)
+        {
+            throw ::Ice::UnknownUserException(__FILE__, __LINE__, __ex.ice_name());
+        }
+    }
+    ::IceInternal::BasicStream* __is = __result->__startReadParams();
+    __is->read(__ret);
+    __result->__endReadParams();
+    return __ret;
+}
+
 const ::std::string&
 IceProxy::Cathy::FileTransfer::ice_staticId()
 {
@@ -318,6 +560,36 @@ Cathy::FileTransfer::___write(::IceInternal::Incoming& __inS, const ::Ice::Curre
     return ::Ice::DispatchOK;
 }
 
+::Ice::DispatchStatus
+Cathy::FileTransfer::___remove(::IceInternal::Incoming& __inS, const ::Ice::Current& __current)
+{
+    __checkMode(::Ice::Normal, __current.mode);
+    ::IceInternal::BasicStream* __is = __inS.startReadParams();
+    ::std::string name;
+    __is->read(name);
+    __inS.endReadParams();
+    bool __ret = remove(name, __current);
+    ::IceInternal::BasicStream* __os = __inS.__startWriteParams(::Ice::DefaultFormat);
+    __os->write(__ret);
+    __inS.__endWriteParams(true);
+    return ::Ice::DispatchOK;
+}
+
+::Ice::DispatchStatus
+Cathy::FileTransfer::___list(::IceInternal::Incoming& __inS, const ::Ice::Current& __current)
+{
+    __checkMode(::Ice::Normal, __current.mode);
+    ::IceInternal::BasicStream* __is = __inS.startReadParams();
+    ::std::string path;
+    __is->read(path);
+    __inS.endReadParams();
+    ::Cathy::ByteSeq __ret = list(path, __current);
+    ::IceInternal::BasicStream* __os = __inS.__startWriteParams(::Ice::DefaultFormat);
+    __os->write(__ret);
+    __inS.__endWriteParams(true);
+    return ::Ice::DispatchOK;
+}
+
 namespace
 {
 const ::std::string __Cathy__FileTransfer_all[] =
@@ -326,7 +598,9 @@ const ::std::string __Cathy__FileTransfer_all[] =
     "ice_ids",
     "ice_isA",
     "ice_ping",
+    "list",
     "read",
+    "remove",
     "write"
 };
 
@@ -335,7 +609,7 @@ const ::std::string __Cathy__FileTransfer_all[] =
 ::Ice::DispatchStatus
 Cathy::FileTransfer::__dispatch(::IceInternal::Incoming& in, const ::Ice::Current& current)
 {
-    ::std::pair< const ::std::string*, const ::std::string*> r = ::std::equal_range(__Cathy__FileTransfer_all, __Cathy__FileTransfer_all + 6, current.operation);
+    ::std::pair< const ::std::string*, const ::std::string*> r = ::std::equal_range(__Cathy__FileTransfer_all, __Cathy__FileTransfer_all + 8, current.operation);
     if(r.first == r.second)
     {
         throw ::Ice::OperationNotExistException(__FILE__, __LINE__, current.id, current.facet, current.operation);
@@ -361,9 +635,17 @@ Cathy::FileTransfer::__dispatch(::IceInternal::Incoming& in, const ::Ice::Curren
         }
         case 4:
         {
-            return ___read(in, current);
+            return ___list(in, current);
         }
         case 5:
+        {
+            return ___read(in, current);
+        }
+        case 6:
+        {
+            return ___remove(in, current);
+        }
+        case 7:
         {
             return ___write(in, current);
         }

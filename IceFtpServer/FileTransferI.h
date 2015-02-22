@@ -14,6 +14,8 @@ public:
 
 	virtual ::Cathy::ByteSeq read(const ::std::string&, ::Ice::Int, ::Ice::Int, const ::Ice::Current& = ::Ice::Current());
 	virtual void write(const ::std::string&, ::Ice::Int, const ::Cathy::ByteSeq&, const ::Ice::Current& = ::Ice::Current());
+	virtual bool remove(const ::std::string&, const ::Ice::Current& = ::Ice::Current());
+	virtual ::Cathy::ByteSeq list(const ::std::string&, const ::Ice::Current& = ::Ice::Current());
 
 private:
 	::std::string _dataDir;

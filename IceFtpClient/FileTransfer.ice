@@ -9,7 +9,8 @@ module Cathy
 	{
 		ByteSeq read( string name,int  offset,int num);
 		void write(string name,int offset,ByteSeq bytes);
-		//void send(int offset, ByteSeq bytes);
+		bool remove(string name);
+		ByteSeq list(string path);
 	};
 };
 

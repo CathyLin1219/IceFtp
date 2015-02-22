@@ -85,6 +85,12 @@ typedef ::IceUtil::Handle< Callback_FileTransfer_read_Base> Callback_FileTransfe
 class Callback_FileTransfer_write_Base : virtual public ::IceInternal::CallbackBase { };
 typedef ::IceUtil::Handle< Callback_FileTransfer_write_Base> Callback_FileTransfer_writePtr;
 
+class Callback_FileTransfer_remove_Base : virtual public ::IceInternal::CallbackBase { };
+typedef ::IceUtil::Handle< Callback_FileTransfer_remove_Base> Callback_FileTransfer_removePtr;
+
+class Callback_FileTransfer_list_Base : virtual public ::IceInternal::CallbackBase { };
+typedef ::IceUtil::Handle< Callback_FileTransfer_list_Base> Callback_FileTransfer_listPtr;
+
 }
 
 namespace IceProxy
@@ -242,6 +248,158 @@ private:
     ::Ice::AsyncResultPtr begin_write(const ::std::string&, ::Ice::Int, const ::Cathy::ByteSeq&, const ::Ice::Context*, const ::IceInternal::CallbackBasePtr&, const ::Ice::LocalObjectPtr& __cookie = 0);
     
 public:
+
+    bool remove(const ::std::string& name)
+    {
+        return remove(name, 0);
+    }
+    bool remove(const ::std::string& name, const ::Ice::Context& __ctx)
+    {
+        return remove(name, &__ctx);
+    }
+#ifdef ICE_CPP11
+    ::Ice::AsyncResultPtr
+    begin_remove(const ::std::string& name, const ::IceInternal::Function<void (bool)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception = ::IceInternal::Function<void (const ::Ice::Exception&)>(), const ::IceInternal::Function<void (bool)>& __sent = ::IceInternal::Function<void (bool)>())
+    {
+        return __begin_remove(name, 0, __response, __exception, __sent);
+    }
+    ::Ice::AsyncResultPtr
+    begin_remove(const ::std::string& name, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __completed, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __sent = ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>())
+    {
+        return begin_remove(name, 0, ::Ice::newCallback(__completed, __sent), 0);
+    }
+    ::Ice::AsyncResultPtr
+    begin_remove(const ::std::string& name, const ::Ice::Context& __ctx, const ::IceInternal::Function<void (bool)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception = ::IceInternal::Function<void (const ::Ice::Exception&)>(), const ::IceInternal::Function<void (bool)>& __sent = ::IceInternal::Function<void (bool)>())
+    {
+        return __begin_remove(name, &__ctx, __response, __exception, __sent);
+    }
+    ::Ice::AsyncResultPtr
+    begin_remove(const ::std::string& name, const ::Ice::Context& __ctx, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __completed, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __sent = ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>())
+    {
+        return begin_remove(name, &__ctx, ::Ice::newCallback(__completed, __sent));
+    }
+    
+private:
+
+    ::Ice::AsyncResultPtr __begin_remove(const ::std::string& name, const ::Ice::Context* __ctx, const ::IceInternal::Function<void (bool)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception, const ::IceInternal::Function<void (bool)>& __sent);
+    
+public:
+#endif
+
+    ::Ice::AsyncResultPtr begin_remove(const ::std::string& name)
+    {
+        return begin_remove(name, 0, ::IceInternal::__dummyCallback, 0);
+    }
+
+    ::Ice::AsyncResultPtr begin_remove(const ::std::string& name, const ::Ice::Context& __ctx)
+    {
+        return begin_remove(name, &__ctx, ::IceInternal::__dummyCallback, 0);
+    }
+
+    ::Ice::AsyncResultPtr begin_remove(const ::std::string& name, const ::Ice::CallbackPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
+    {
+        return begin_remove(name, 0, __del, __cookie);
+    }
+
+    ::Ice::AsyncResultPtr begin_remove(const ::std::string& name, const ::Ice::Context& __ctx, const ::Ice::CallbackPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
+    {
+        return begin_remove(name, &__ctx, __del, __cookie);
+    }
+
+    ::Ice::AsyncResultPtr begin_remove(const ::std::string& name, const ::Cathy::Callback_FileTransfer_removePtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
+    {
+        return begin_remove(name, 0, __del, __cookie);
+    }
+
+    ::Ice::AsyncResultPtr begin_remove(const ::std::string& name, const ::Ice::Context& __ctx, const ::Cathy::Callback_FileTransfer_removePtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
+    {
+        return begin_remove(name, &__ctx, __del, __cookie);
+    }
+
+    bool end_remove(const ::Ice::AsyncResultPtr&);
+    
+private:
+
+    bool remove(const ::std::string&, const ::Ice::Context*);
+    ::Ice::AsyncResultPtr begin_remove(const ::std::string&, const ::Ice::Context*, const ::IceInternal::CallbackBasePtr&, const ::Ice::LocalObjectPtr& __cookie = 0);
+    
+public:
+
+    ::Cathy::ByteSeq list(const ::std::string& path)
+    {
+        return list(path, 0);
+    }
+    ::Cathy::ByteSeq list(const ::std::string& path, const ::Ice::Context& __ctx)
+    {
+        return list(path, &__ctx);
+    }
+#ifdef ICE_CPP11
+    ::Ice::AsyncResultPtr
+    begin_list(const ::std::string& path, const ::IceInternal::Function<void (const ::Cathy::ByteSeq&)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception = ::IceInternal::Function<void (const ::Ice::Exception&)>(), const ::IceInternal::Function<void (bool)>& __sent = ::IceInternal::Function<void (bool)>())
+    {
+        return __begin_list(path, 0, __response, __exception, __sent);
+    }
+    ::Ice::AsyncResultPtr
+    begin_list(const ::std::string& path, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __completed, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __sent = ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>())
+    {
+        return begin_list(path, 0, ::Ice::newCallback(__completed, __sent), 0);
+    }
+    ::Ice::AsyncResultPtr
+    begin_list(const ::std::string& path, const ::Ice::Context& __ctx, const ::IceInternal::Function<void (const ::Cathy::ByteSeq&)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception = ::IceInternal::Function<void (const ::Ice::Exception&)>(), const ::IceInternal::Function<void (bool)>& __sent = ::IceInternal::Function<void (bool)>())
+    {
+        return __begin_list(path, &__ctx, __response, __exception, __sent);
+    }
+    ::Ice::AsyncResultPtr
+    begin_list(const ::std::string& path, const ::Ice::Context& __ctx, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __completed, const ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>& __sent = ::IceInternal::Function<void (const ::Ice::AsyncResultPtr&)>())
+    {
+        return begin_list(path, &__ctx, ::Ice::newCallback(__completed, __sent));
+    }
+    
+private:
+
+    ::Ice::AsyncResultPtr __begin_list(const ::std::string& path, const ::Ice::Context* __ctx, const ::IceInternal::Function<void (const ::Cathy::ByteSeq&)>& __response, const ::IceInternal::Function<void (const ::Ice::Exception&)>& __exception, const ::IceInternal::Function<void (bool)>& __sent);
+    
+public:
+#endif
+
+    ::Ice::AsyncResultPtr begin_list(const ::std::string& path)
+    {
+        return begin_list(path, 0, ::IceInternal::__dummyCallback, 0);
+    }
+
+    ::Ice::AsyncResultPtr begin_list(const ::std::string& path, const ::Ice::Context& __ctx)
+    {
+        return begin_list(path, &__ctx, ::IceInternal::__dummyCallback, 0);
+    }
+
+    ::Ice::AsyncResultPtr begin_list(const ::std::string& path, const ::Ice::CallbackPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
+    {
+        return begin_list(path, 0, __del, __cookie);
+    }
+
+    ::Ice::AsyncResultPtr begin_list(const ::std::string& path, const ::Ice::Context& __ctx, const ::Ice::CallbackPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
+    {
+        return begin_list(path, &__ctx, __del, __cookie);
+    }
+
+    ::Ice::AsyncResultPtr begin_list(const ::std::string& path, const ::Cathy::Callback_FileTransfer_listPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
+    {
+        return begin_list(path, 0, __del, __cookie);
+    }
+
+    ::Ice::AsyncResultPtr begin_list(const ::std::string& path, const ::Ice::Context& __ctx, const ::Cathy::Callback_FileTransfer_listPtr& __del, const ::Ice::LocalObjectPtr& __cookie = 0)
+    {
+        return begin_list(path, &__ctx, __del, __cookie);
+    }
+
+    ::Cathy::ByteSeq end_list(const ::Ice::AsyncResultPtr&);
+    
+private:
+
+    ::Cathy::ByteSeq list(const ::std::string&, const ::Ice::Context*);
+    ::Ice::AsyncResultPtr begin_list(const ::std::string&, const ::Ice::Context*, const ::IceInternal::CallbackBasePtr&, const ::Ice::LocalObjectPtr& __cookie = 0);
+    
+public:
     
     ::IceInternal::ProxyHandle<FileTransfer> ice_context(const ::Ice::Context& __context) const
     {
@@ -378,6 +536,12 @@ public:
 
     virtual void write(const ::std::string&, ::Ice::Int, const ::Cathy::ByteSeq&, const ::Ice::Current& = ::Ice::Current()) = 0;
     ::Ice::DispatchStatus ___write(::IceInternal::Incoming&, const ::Ice::Current&);
+
+    virtual bool remove(const ::std::string&, const ::Ice::Current& = ::Ice::Current()) = 0;
+    ::Ice::DispatchStatus ___remove(::IceInternal::Incoming&, const ::Ice::Current&);
+
+    virtual ::Cathy::ByteSeq list(const ::std::string&, const ::Ice::Current& = ::Ice::Current()) = 0;
+    ::Ice::DispatchStatus ___list(::IceInternal::Incoming&, const ::Ice::Current&);
 
     virtual ::Ice::DispatchStatus __dispatch(::IceInternal::Incoming&, const ::Ice::Current&);
 
@@ -587,6 +751,214 @@ template<class T, typename CT> Callback_FileTransfer_writePtr
 newCallback_FileTransfer_write(T* instance, void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
 {
     return new Callback_FileTransfer_write<T, CT>(instance, 0, excb, sentcb);
+}
+
+template<class T>
+class CallbackNC_FileTransfer_remove : public Callback_FileTransfer_remove_Base, public ::IceInternal::TwowayCallbackNC<T>
+{
+public:
+
+    typedef IceUtil::Handle<T> TPtr;
+
+    typedef void (T::*Exception)(const ::Ice::Exception&);
+    typedef void (T::*Sent)(bool);
+    typedef void (T::*Response)(bool);
+
+    CallbackNC_FileTransfer_remove(const TPtr& obj, Response cb, Exception excb, Sent sentcb)
+        : ::IceInternal::TwowayCallbackNC<T>(obj, cb != 0, excb, sentcb), _response(cb)
+    {
+    }
+
+    virtual void completed(const ::Ice::AsyncResultPtr& __result) const
+    {
+        ::Cathy::FileTransferPrx __proxy = ::Cathy::FileTransferPrx::uncheckedCast(__result->getProxy());
+        bool __ret;
+        try
+        {
+            __ret = __proxy->end_remove(__result);
+        }
+        catch(const ::Ice::Exception& ex)
+        {
+            ::IceInternal::CallbackNC<T>::exception(__result, ex);
+            return;
+        }
+        if(_response)
+        {
+            (::IceInternal::CallbackNC<T>::_callback.get()->*_response)(__ret);
+        }
+    }
+
+    private:
+
+    Response _response;
+};
+
+template<class T> Callback_FileTransfer_removePtr
+newCallback_FileTransfer_remove(const IceUtil::Handle<T>& instance, void (T::*cb)(bool), void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
+{
+    return new CallbackNC_FileTransfer_remove<T>(instance, cb, excb, sentcb);
+}
+
+template<class T> Callback_FileTransfer_removePtr
+newCallback_FileTransfer_remove(T* instance, void (T::*cb)(bool), void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
+{
+    return new CallbackNC_FileTransfer_remove<T>(instance, cb, excb, sentcb);
+}
+
+template<class T, typename CT>
+class Callback_FileTransfer_remove : public Callback_FileTransfer_remove_Base, public ::IceInternal::TwowayCallback<T, CT>
+{
+public:
+
+    typedef IceUtil::Handle<T> TPtr;
+
+    typedef void (T::*Exception)(const ::Ice::Exception& , const CT&);
+    typedef void (T::*Sent)(bool , const CT&);
+    typedef void (T::*Response)(bool, const CT&);
+
+    Callback_FileTransfer_remove(const TPtr& obj, Response cb, Exception excb, Sent sentcb)
+        : ::IceInternal::TwowayCallback<T, CT>(obj, cb != 0, excb, sentcb), _response(cb)
+    {
+    }
+
+    virtual void completed(const ::Ice::AsyncResultPtr& __result) const
+    {
+        ::Cathy::FileTransferPrx __proxy = ::Cathy::FileTransferPrx::uncheckedCast(__result->getProxy());
+        bool __ret;
+        try
+        {
+            __ret = __proxy->end_remove(__result);
+        }
+        catch(const ::Ice::Exception& ex)
+        {
+            ::IceInternal::Callback<T, CT>::exception(__result, ex);
+            return;
+        }
+        if(_response)
+        {
+            (::IceInternal::Callback<T, CT>::_callback.get()->*_response)(__ret, CT::dynamicCast(__result->getCookie()));
+        }
+    }
+
+    private:
+
+    Response _response;
+};
+
+template<class T, typename CT> Callback_FileTransfer_removePtr
+newCallback_FileTransfer_remove(const IceUtil::Handle<T>& instance, void (T::*cb)(bool, const CT&), void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
+{
+    return new Callback_FileTransfer_remove<T, CT>(instance, cb, excb, sentcb);
+}
+
+template<class T, typename CT> Callback_FileTransfer_removePtr
+newCallback_FileTransfer_remove(T* instance, void (T::*cb)(bool, const CT&), void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
+{
+    return new Callback_FileTransfer_remove<T, CT>(instance, cb, excb, sentcb);
+}
+
+template<class T>
+class CallbackNC_FileTransfer_list : public Callback_FileTransfer_list_Base, public ::IceInternal::TwowayCallbackNC<T>
+{
+public:
+
+    typedef IceUtil::Handle<T> TPtr;
+
+    typedef void (T::*Exception)(const ::Ice::Exception&);
+    typedef void (T::*Sent)(bool);
+    typedef void (T::*Response)(const ::Cathy::ByteSeq&);
+
+    CallbackNC_FileTransfer_list(const TPtr& obj, Response cb, Exception excb, Sent sentcb)
+        : ::IceInternal::TwowayCallbackNC<T>(obj, cb != 0, excb, sentcb), _response(cb)
+    {
+    }
+
+    virtual void completed(const ::Ice::AsyncResultPtr& __result) const
+    {
+        ::Cathy::FileTransferPrx __proxy = ::Cathy::FileTransferPrx::uncheckedCast(__result->getProxy());
+        ::Cathy::ByteSeq __ret;
+        try
+        {
+            __ret = __proxy->end_list(__result);
+        }
+        catch(const ::Ice::Exception& ex)
+        {
+            ::IceInternal::CallbackNC<T>::exception(__result, ex);
+            return;
+        }
+        if(_response)
+        {
+            (::IceInternal::CallbackNC<T>::_callback.get()->*_response)(__ret);
+        }
+    }
+
+    private:
+
+    Response _response;
+};
+
+template<class T> Callback_FileTransfer_listPtr
+newCallback_FileTransfer_list(const IceUtil::Handle<T>& instance, void (T::*cb)(const ::Cathy::ByteSeq&), void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
+{
+    return new CallbackNC_FileTransfer_list<T>(instance, cb, excb, sentcb);
+}
+
+template<class T> Callback_FileTransfer_listPtr
+newCallback_FileTransfer_list(T* instance, void (T::*cb)(const ::Cathy::ByteSeq&), void (T::*excb)(const ::Ice::Exception&), void (T::*sentcb)(bool) = 0)
+{
+    return new CallbackNC_FileTransfer_list<T>(instance, cb, excb, sentcb);
+}
+
+template<class T, typename CT>
+class Callback_FileTransfer_list : public Callback_FileTransfer_list_Base, public ::IceInternal::TwowayCallback<T, CT>
+{
+public:
+
+    typedef IceUtil::Handle<T> TPtr;
+
+    typedef void (T::*Exception)(const ::Ice::Exception& , const CT&);
+    typedef void (T::*Sent)(bool , const CT&);
+    typedef void (T::*Response)(const ::Cathy::ByteSeq&, const CT&);
+
+    Callback_FileTransfer_list(const TPtr& obj, Response cb, Exception excb, Sent sentcb)
+        : ::IceInternal::TwowayCallback<T, CT>(obj, cb != 0, excb, sentcb), _response(cb)
+    {
+    }
+
+    virtual void completed(const ::Ice::AsyncResultPtr& __result) const
+    {
+        ::Cathy::FileTransferPrx __proxy = ::Cathy::FileTransferPrx::uncheckedCast(__result->getProxy());
+        ::Cathy::ByteSeq __ret;
+        try
+        {
+            __ret = __proxy->end_list(__result);
+        }
+        catch(const ::Ice::Exception& ex)
+        {
+            ::IceInternal::Callback<T, CT>::exception(__result, ex);
+            return;
+        }
+        if(_response)
+        {
+            (::IceInternal::Callback<T, CT>::_callback.get()->*_response)(__ret, CT::dynamicCast(__result->getCookie()));
+        }
+    }
+
+    private:
+
+    Response _response;
+};
+
+template<class T, typename CT> Callback_FileTransfer_listPtr
+newCallback_FileTransfer_list(const IceUtil::Handle<T>& instance, void (T::*cb)(const ::Cathy::ByteSeq&, const CT&), void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
+{
+    return new Callback_FileTransfer_list<T, CT>(instance, cb, excb, sentcb);
+}
+
+template<class T, typename CT> Callback_FileTransfer_listPtr
+newCallback_FileTransfer_list(T* instance, void (T::*cb)(const ::Cathy::ByteSeq&, const CT&), void (T::*excb)(const ::Ice::Exception&, const CT&), void (T::*sentcb)(bool, const CT&) = 0)
+{
+    return new Callback_FileTransfer_list<T, CT>(instance, cb, excb, sentcb);
 }
 
 }

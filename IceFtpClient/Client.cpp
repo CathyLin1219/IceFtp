@@ -19,7 +19,8 @@ private:
 	int parsCommand(const char* strCommand);
 	void Upload(const char* strFilePath);
 	void Download(const char* strServerPath,const char* strClientPath);
-	void GetList();
+	void Delete(const char* strServerPath);
+	void List(const char* strServerPath);
 };
 
 
@@ -33,7 +34,7 @@ int main(int argc, char* argv[])
 int
 FileTransferClient::run(int argc, char* argv[])
 {
-	int status = 0;
+	int status = 1;//初始状态为1；若为0，则退出；若为-1，则出错；若为1，则正常处理
 	Ice::CommunicatorPtr ic;
 	try {
 		ic = Ice::initialize(argc, argv);
@@ -45,11 +46,10 @@ FileTransferClient::run(int argc, char* argv[])
 
 		//进入菜单处理部分
 		char command[100];
-		int status = 1;//初始状态为1；若为0，则退出；若为-1，则出错；若为1，则正常处理
 		while (status){
 			showMenu();
 			cin.getline(command, 100);
-			parsCommand(command);
+			status = parsCommand(command);
 		}
 	}
 	catch (const Ice::Exception& ex) {
@@ -71,7 +71,8 @@ FileTransferClient::FileTransferClient()
 		"*****************test ice client *********************** \n"
 		"\tupload [LocalFilePath]\n"
 		"\tdownload [ServerFilePath] [LocalFilePath]\n"
-		"\tlist \n"
+		"\tlist \\[ServerFilePath]\n"
+		"\tdelete [ServerFilePath/ServerDirectoryPath] \n"
 		"\tq\n"
 		"******************************************************** \n";
 }
@@ -91,7 +92,7 @@ int FileTransferClient::parsCommand(const char* strCommand)
 	//q
 	char strCommandCopy[100];
 	strcpy(strCommandCopy, strCommand);
-	char element[3][100];
+	char element[3][100] = { { 0 }, { 0 }, { 0 } };
 	int elementNum=0;
 	char *temp = strtok(strCommandCopy, " \t");
 	while (temp != NULL)
@@ -120,7 +121,13 @@ int FileTransferClient::parsCommand(const char* strCommand)
 		return 1;
 	}
 	else if (strcmp(element[0], "list") == 0){
-		//处理 list
+		//处理 list [ServerFilePath]
+		List(element[1]); 
+		return 1;
+	}
+	else if (strcmp(element[0], "delete") == 0){
+		//处理 delete [ServerFilePath/ServerDirectoryPath]
+		Delete(element[1]);
 		return 1;
 	}
 	else if (strcmp(element[0], "q") == 0){
@@ -207,15 +214,6 @@ void FileTransferClient::Download(const char* strServerPath, const char* strClie
 
 	list<Ice::AsyncResultPtr> results;
 	const int numRequests = 5;
-
-	////解析文件名
-	//string strFileName = strFilePath;	// Remove directory if present.
-	//const size_t last_slash_idx = strFileName.find_last_of("\\/");
-	//if (std::string::npos != last_slash_idx)
-	//{
-	//	strFileName.erase(0, last_slash_idx + 1);
-	//}
-
 	while (1)
 	{
 		ByteSeq bs;
@@ -241,4 +239,22 @@ void FileTransferClient::Download(const char* strServerPath, const char* strClie
 		Ice::AsyncResultPtr r = results.front();
 		results.pop_front();
 	}
+}
+
+void FileTransferClient::Delete(const char* strServerPath)
+{
+	if (transferPrx->remove(strServerPath))
+		return;
+	else
+		cout << "failed to delete file or directory!"<<endl;
+}
+
+void FileTransferClient::List(const char* strServerPath)
+{
+	ByteSeq listContent;
+	listContent = transferPrx->list(strServerPath);
+	//输出
+	int i;
+	for (i = 0; i < listContent.size();i++)
+		cout << listContent[i];
 }
